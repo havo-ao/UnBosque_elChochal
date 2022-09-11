@@ -9,9 +9,9 @@ public class Products {
 
 	public Products(Date expirationDate, String batchNumber, Date packingDate, String originCountry) {
 		this.expirationDate = expirationDate;
-		this.batchNumber=batchNumber;
-		this.packingDate=packingDate;
-		this.originCountry=originCountry;
+		this.batchNumber = batchNumber;
+		this.packingDate = packingDate;
+		this.originCountry = originCountry;
 	}
 
 	public Date getExpirationDate() {
@@ -45,9 +45,5 @@ public class Products {
 	public void setOriginCountry(String originCountry) {
 		this.originCountry = originCountry;
 	}
-	
-	
-	
-	
 
 }
