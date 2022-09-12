@@ -6,14 +6,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Controller {
-	
-	DateFormat dateFormatter;
+
+	DateFormat dateFormatter = new SimpleDateFormat("dd-mm-yy");
 
 	public Controller() {
-		dateFormatter = new SimpleDateFormat("dd-mm-yy");	
 		
 	}
-	
+
 	public Date dateParser(String dateString) throws ParseException {
 		return dateFormatter.parse(dateString);
 	}
