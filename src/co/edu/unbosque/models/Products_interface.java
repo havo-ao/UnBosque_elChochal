@@ -6,7 +6,7 @@ public interface Products_interface {
 	
 	void create(ArrayList<Products> products, Products product);
 
-	Products get(ArrayList<Products> products, String batchNumber);
+	Products getByBatch(ArrayList<Products> products, String batchNumber);
 
 	void delete(ArrayList<Products> products, String batchNumber);
 
