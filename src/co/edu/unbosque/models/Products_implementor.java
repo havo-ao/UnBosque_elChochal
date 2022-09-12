@@ -10,7 +10,7 @@ public class Products_implementor implements Products_interface {
 	}
 
 	@Override
-	public Products get(ArrayList<Products> products, String batchNumber) {
+	public Products getByBatch(ArrayList<Products> products, String batchNumber) {
 
 		for (Products product : products) {
 			boolean isFound = product.getBatchNumber() == batchNumber;
@@ -24,7 +24,7 @@ public class Products_implementor implements Products_interface {
 
 	@Override
 	public void delete(ArrayList<Products> products, String batchNumber) {
-		Products productFound = get(products, batchNumber);
+		Products productFound = getByBatch(products, batchNumber);
 
 		boolean isFound = productFound != null;
 
@@ -35,7 +35,7 @@ public class Products_implementor implements Products_interface {
 
 	@Override
 	public void modify(ArrayList<Products> products, String batchNumber, Products product) {
-		boolean isFound = get(products, batchNumber) != null;
+		boolean isFound = getByBatch(products, batchNumber) != null;
 
 		if (isFound) {
 			delete(products, batchNumber);
