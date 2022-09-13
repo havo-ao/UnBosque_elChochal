@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,6 +14,7 @@ import javax.swing.JComboBox;
 import co.edu.unbosque.models.Fresh;
 import co.edu.unbosque.models.Products;
 import co.edu.unbosque.models.Products_implementor;
+import co.edu.unbosque.models.Utils;
 import co.edu.unbosque.views.WindowAddOrModify;
 import co.edu.unbosque.views.WindowFindOrDelete;
 import co.edu.unbosque.views.WindowMainView;
@@ -23,6 +26,7 @@ public class Controller implements ActionListener, ItemListener {
 	private WindowAddOrModify modifyView;
 	private WindowFindOrDelete findOrDeleteView;
 	private Products_implementor productsOperations;
+	private Utils utils;
 
 	private ArrayList<Products> productsList;
 
@@ -41,6 +45,7 @@ public class Controller implements ActionListener, ItemListener {
 		mainView.getBtnFindDelete().addActionListener(this);
 
 		addView.getBtnReturn().addActionListener(this);
+		addView.getBtnSaveProduct().addActionListener(this);
 		addView.getCmbProductType().addItemListener(this);
 
 		modifyView.getBtnReturn().addActionListener(this);
@@ -48,14 +53,21 @@ public class Controller implements ActionListener, ItemListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		btnAdd_Event(e.getSource(), mainView.getBtnAdd());
-		btnModify_Event(e.getSource(), mainView.getBtnModify());
-		btnFindOrDelete_Event(e.getSource(), mainView.getBtnFindDelete());
 
-		btnBack_Event(e.getSource(), addView.getBtnReturn());
-		btnSave_Event(e.getSource(), addView.getBtnSaveProduct());
+		try {
+			btnAdd_Event(e.getSource(), mainView.getBtnAdd());
+			btnModify_Event(e.getSource(), mainView.getBtnModify());
+			btnFindOrDelete_Event(e.getSource(), mainView.getBtnFindDelete());
 
-		btnBackModify_Event(e.getSource(), modifyView.getBtnReturn());
+			btnBack_Event(e.getSource(), addView.getBtnReturn());
+			btnSave_Event(e.getSource(), addView.getBtnSaveProduct());
+
+			btnBackModify_Event(e.getSource(), modifyView.getBtnReturn());
+
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+
 	}
 
 	@Override
@@ -98,13 +110,15 @@ public class Controller implements ActionListener, ItemListener {
 		}
 	}
 
-	private void btnSave_Event(Object source, JButton button) {
+	private void btnSave_Event(Object source, JButton button) throws ParseException {
 		if (source.equals(button)) {
 			String selection = (String) addView.getCmbProductType().getSelectedItem();
 
 			if (selection.equals("Fresco")) {
+				Date expirationDatem = utils.dateParser(addView.getTxtExpirationDate().getText());
+
 				productsOperations.create(productsList,
-						new Fresh(null, addView.getTxtBatch().getText(), null, selection));
+						new Fresh(expirationDatem, addView.getTxtBatch().getText(), null, selection));
 
 			} else if (selection.equals("Refrigerado")) {
 
@@ -179,6 +193,11 @@ public class Controller implements ActionListener, ItemListener {
 
 	public void setFindOrDeleteView(WindowFindOrDelete findOrDeleteView) {
 		this.findOrDeleteView = findOrDeleteView;
+	}
+
+	public void setUtils(Utils utils) {
+		this.utils = utils;
+
 	}
 
 }
