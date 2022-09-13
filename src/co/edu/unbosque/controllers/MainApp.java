@@ -1,6 +1,7 @@
 package co.edu.unbosque.controllers;
 
 import co.edu.unbosque.models.Products_implementor;
+import co.edu.unbosque.models.Utils;
 import co.edu.unbosque.views.WindowAddOrModify;
 import co.edu.unbosque.views.WindowFindOrDelete;
 import co.edu.unbosque.views.WindowMainView;
@@ -12,6 +13,7 @@ public class MainApp {
 	private WindowAddOrModify modifyView;
 	private WindowFindOrDelete findOrDeleteView;
 	private Products_implementor productsOperations;
+	private Utils utils;
 	private Controller controller;
 
 	public static void main(String[] args) {
@@ -38,6 +40,14 @@ public class MainApp {
 		modifyView = new WindowAddOrModify();
 		findOrDeleteView = new WindowFindOrDelete();
 	}
+	
+	private void initializeModels() {
+		productsOperations = new Products_implementor();
+	}
+
+	private void initializeControllers() {
+		controller = new Controller();
+	}
 
 	private void setControllerToViews() {
 		mainView.setController(controller);
@@ -55,19 +65,11 @@ public class MainApp {
 		controller.setAddView(addView);
 		controller.setModifyView(modifyView);
 		controller.setFindOrDeleteView(findOrDeleteView);
+		controller.setUtils(utils);
 	}
 
 	private void setModelsToController() {
 		controller.setProductsOperations(productsOperations);
 
-	}
-
-	private void initializeModels() {
-		productsOperations = new Products_implementor();
-
-	}
-
-	private void initializeControllers() {
-		controller = new Controller();
 	}
 }
